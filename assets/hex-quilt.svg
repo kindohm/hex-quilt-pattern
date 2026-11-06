@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<title>Six-sector hexagon quilt pattern</title>
+<desc>Six triangular sectors, each divided into one inner triangle and four outer quadrilaterals. Thirty individually identified pieces, clockwise from the upper-left sector.</desc>
+<rect width="1200" height="1200" fill="white"/>
+<g fill="white" stroke="#202020" stroke-width="2.4" stroke-linejoin="round">
+<g id="sector-1">
+<polygon id="sector-1-inner" points="600.000,600.000 600.000,411.000 202.494,370.500"/>
+<polygon id="sector-1-outer-1" points="600.000,60.000 483.087,127.500 544.349,405.330 600.000,411.000"/>
+<polygon id="sector-1-outer-2" points="483.087,127.500 366.173,195.000 480.748,398.850 544.349,405.330"/>
+<polygon id="sector-1-outer-3" points="366.173,195.000 249.260,262.500 385.347,389.130 480.748,398.850"/>
+<polygon id="sector-1-outer-4" points="249.260,262.500 132.346,330.000 202.494,370.500 385.347,389.130"/>
+</g>
+<g id="sector-2">
+<polygon id="sector-2-inner" points="600.000,600.000 763.679,505.500 600.000,141.000"/>
+<polygon id="sector-2-outer-1" points="1067.654,330.000 950.740,262.500 740.764,454.470 763.679,505.500"/>
+<polygon id="sector-2-outer-2" points="950.740,262.500 833.827,195.000 714.575,396.150 740.764,454.470"/>
+<polygon id="sector-2-outer-3" points="833.827,195.000 716.913,127.500 675.292,308.670 714.575,396.150"/>
+<polygon id="sector-2-outer-4" points="716.913,127.500 600.000,60.000 600.000,141.000 675.292,308.670"/>
+</g>
+<g id="sector-3">
+<polygon id="sector-3-inner" points="600.000,600.000 763.679,694.500 997.506,370.500"/>
+<polygon id="sector-3-outer-1" points="1067.654,870.000 1067.654,735.000 796.415,649.140 763.679,694.500"/>
+<polygon id="sector-3-outer-2" points="1067.654,735.000 1067.654,600.000 833.827,597.300 796.415,649.140"/>
+<polygon id="sector-3-outer-3" points="1067.654,600.000 1067.654,465.000 889.945,519.540 833.827,597.300"/>
+<polygon id="sector-3-outer-4" points="1067.654,465.000 1067.654,330.000 997.506,370.500 889.945,519.540"/>
+</g>
+<g id="sector-4">
+<polygon id="sector-4-inner" points="600.000,600.000 600.000,789.000 997.506,829.500"/>
+<polygon id="sector-4-outer-1" points="600.000,1140.000 716.913,1072.500 655.651,794.670 600.000,789.000"/>
+<polygon id="sector-4-outer-2" points="716.913,1072.500 833.827,1005.000 719.252,801.150 655.651,794.670"/>
+<polygon id="sector-4-outer-3" points="833.827,1005.000 950.740,937.500 814.653,810.870 719.252,801.150"/>
+<polygon id="sector-4-outer-4" points="950.740,937.500 1067.654,870.000 997.506,829.500 814.653,810.870"/>
+</g>
+<g id="sector-5">
+<polygon id="sector-5-inner" points="600.000,600.000 436.321,694.500 600.000,1059.000"/>
+<polygon id="sector-5-outer-1" points="132.346,870.000 249.260,937.500 459.236,745.530 436.321,694.500"/>
+<polygon id="sector-5-outer-2" points="249.260,937.500 366.173,1005.000 485.425,803.850 459.236,745.530"/>
+<polygon id="sector-5-outer-3" points="366.173,1005.000 483.087,1072.500 524.708,891.330 485.425,803.850"/>
+<polygon id="sector-5-outer-4" points="483.087,1072.500 600.000,1140.000 600.000,1059.000 524.708,891.330"/>
+</g>
+<g id="sector-6">
+<polygon id="sector-6-inner" points="600.000,600.000 436.321,505.500 202.494,829.500"/>
+<polygon id="sector-6-outer-1" points="132.346,330.000 132.346,465.000 403.585,550.860 436.321,505.500"/>
+<polygon id="sector-6-outer-2" points="132.346,465.000 132.346,600.000 366.173,602.700 403.585,550.860"/>
+<polygon id="sector-6-outer-3" points="132.346,600.000 132.346,735.000 310.055,680.460 366.173,602.700"/>
+<polygon id="sector-6-outer-4" points="132.346,735.000 132.346,870.000 202.494,829.500 310.055,680.460"/>
+</g>
+</g>
+</svg>
