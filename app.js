@@ -52,18 +52,26 @@
     geometry.forEach((sector, s) => sector.pieces.forEach((piece, p) => {
       (p === 4 ? gray : rows[state.assignment[s * 4 + p]]).pieces.push(piece.id);
     }));
-    return [...rows, gray];
+    return [...rows, gray].map(row => ({
+      ...row,
+      shapeCounts: [1, 2, 3, 4, 5].map(shape => row.pieces.filter(id => id.endsWith(String(shape))).length)
+    }));
   }
   function table() {
     $('assignments').replaceChildren();
-    cuttingRows().forEach(({ name, hex, pieces }) => {
+    cuttingRows().forEach(({ name, hex, pieces, shapeCounts }) => {
       const row = document.createElement('tr');
       const heading = document.createElement('th'); heading.scope = 'row';
       const dot = document.createElement('span'); dot.className = 'dot'; dot.style.backgroundColor = hex; dot.setAttribute('aria-hidden', 'true');
       heading.append(dot, name);
       const count = document.createElement('td'); count.textContent = pieces.length;
       const list = document.createElement('td'); list.className = 'cutting-pieces'; list.textContent = pieces.join(', ');
-      row.append(heading, count, list);
+      row.append(heading);
+      shapeCounts.forEach(quantity => {
+        const cell = document.createElement('td'); cell.textContent = quantity;
+        row.append(cell);
+      });
+      row.append(count, list);
       $('assignments').append(row);
     });
     // Any previous manual-copy fallback represents an older arrangement.
@@ -108,8 +116,8 @@
   });
   $('labels').addEventListener('change', () => { state.labels = $('labels').checked; draw(); save(); });
   $('copy').addEventListener('click', async () => {
-    const rows = ['Color\tHex\tQuantity\tPieces'];
-    cuttingRows().forEach(({ name, hex, pieces }) => rows.push([name, hex, pieces.length, pieces.join(', ')].join('\t')));
+    const rows = ['Color\tHex\tShape 1\tShape 2\tShape 3\tShape 4\tShape 5\tTotal\tPiece IDs'];
+    cuttingRows().forEach(({ name, hex, pieces, shapeCounts }) => rows.push([name, hex, ...shapeCounts, pieces.length, pieces.join(', ')].join('\t')));
     const text = rows.join('\n');
     try { await navigator.clipboard.writeText(text); $('copy-status').textContent = 'Table and color legend copied.'; }
     catch { $('copy-fallback').value = text; $('copy-fallback').hidden = false; $('copy-fallback').focus(); $('copy-fallback').select(); $('copy-status').textContent = 'Select and copy the table below.'; }

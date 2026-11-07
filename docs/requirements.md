@@ -59,8 +59,8 @@ The line from the center to the top vertex at 12 o'clock is the boundary between
 - A color ID cannot appear more than once within the same sector, even on nonadjacent pieces. Each sector therefore needs four distinct colors, making 4 the minimum available count.
 - When loading older saved arrangements, preserve the palette and preferences and regenerate assignments that violate the new rule. Upgrade counts below 4 to 4.
 - Show piece and color IDs on the drawing, for example `A1 · C3`, with a toggle to hide labels. The legend names color IDs explicitly as “Color 3.”
-- Organize the cutting table by color: one row per color with its swatch, quantity, and all matching piece IDs ordered by sector and piece. Include a Gray row for A5–F5.
-- Copy Table uses the same color grouping, including color ID, hex value, quantity, and piece IDs.
+- Organize the cutting table by color: one row per color with its swatch, counts for each size/shape (1–5), total quantity, and all matching piece IDs ordered by sector and piece. The numeric suffix identifies the shape across sectors: A1 and B1 are both shape 1. Show zero for unused shapes. Include a Gray row with six shape-5 pieces, A5–F5.
+- Copy Table uses the same color grouping, including color ID, hex value, counts for shapes 1–5, total quantity, and piece IDs.
 - Provide a Copy Table action that includes the assignments and legend for notes or spreadsheets.
 - Remember the current arrangement, palette, starting color, count, and label preference locally in the same browser.
 - Make the page usable on desktop and mobile and with keyboard controls.
