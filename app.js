@@ -46,17 +46,24 @@
       $('quilt').append(group);
     });
   }
+  function cuttingRows() {
+    const rows = state.palette.map((hex, i) => ({ name: `Color ${i + 1}`, hex, pieces: [] }));
+    const gray = { name: 'Gray', hex: '#d4d2d8', pieces: [] };
+    geometry.forEach((sector, s) => sector.pieces.forEach((piece, p) => {
+      (p === 4 ? gray : rows[state.assignment[s * 4 + p]]).pieces.push(piece.id);
+    }));
+    return [...rows, gray];
+  }
   function table() {
     $('assignments').replaceChildren();
-    geometry.forEach((sector, s) => {
+    cuttingRows().forEach(({ name, hex, pieces }) => {
       const row = document.createElement('tr');
-      const heading = document.createElement('th'); heading.scope = 'row'; heading.textContent = sector.letter; row.append(heading);
-      for (let p = 0; p < 5; p++) {
-        const color = p === 4 ? null : state.assignment[s * 4 + p];
-        const cell = document.createElement('td');
-        const dot = document.createElement('span'); dot.className = 'dot'; dot.style.backgroundColor = color === null ? '#d4d2d8' : state.palette[color]; dot.setAttribute('aria-hidden', 'true');
-        cell.append(dot, color === null ? 'Gray' : `Color ${color + 1}`); row.append(cell);
-      }
+      const heading = document.createElement('th'); heading.scope = 'row';
+      const dot = document.createElement('span'); dot.className = 'dot'; dot.style.backgroundColor = hex; dot.setAttribute('aria-hidden', 'true');
+      heading.append(dot, name);
+      const count = document.createElement('td'); count.textContent = pieces.length;
+      const list = document.createElement('td'); list.className = 'cutting-pieces'; list.textContent = pieces.join(', ');
+      row.append(heading, count, list);
       $('assignments').append(row);
     });
     // Any previous manual-copy fallback represents an older arrangement.
@@ -101,11 +108,8 @@
   });
   $('labels').addEventListener('change', () => { state.labels = $('labels').checked; draw(); save(); });
   $('copy').addEventListener('click', async () => {
-    const rows = ['Sector\tPiece 1\tPiece 2\tPiece 3\tPiece 4\tPiece 5'];
-    geometry.forEach((sector, s) => rows.push([sector.letter, ...state.assignment.slice(s * 4, s * 4 + 4).map(c => `Color ${c + 1}`), 'Gray'].join('\t')));
-    rows.push('', 'Color\tHex\tPiece count');
-    state.palette.forEach((color, i) => rows.push(`Color ${i + 1}\t${color}\t${state.assignment.filter(c => c === i).length}`));
-    rows.push('Gray\t#d4d2d8\t6');
+    const rows = ['Color\tHex\tQuantity\tPieces'];
+    cuttingRows().forEach(({ name, hex, pieces }) => rows.push([name, hex, pieces.length, pieces.join(', ')].join('\t')));
     const text = rows.join('\n');
     try { await navigator.clipboard.writeText(text); $('copy-status').textContent = 'Table and color legend copied.'; }
     catch { $('copy-fallback').value = text; $('copy-fallback').hidden = false; $('copy-fallback').focus(); $('copy-fallback').select(); $('copy-status').textContent = 'Select and copy the table below.'; }
