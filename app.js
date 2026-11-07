@@ -5,7 +5,15 @@
   let state = { count: 5, base: '#75547d', palette: Quilt.shades('#75547d', 5), assignment: Quilt.arrange(5), labels: true };
   try {
     const stored = JSON.parse(localStorage.getItem(key));
-    if (stored && Quilt.valid(stored.assignment, stored.count) && hex(stored.base) && Array.isArray(stored.palette) && stored.palette.length === stored.count && stored.palette.every(hex) && typeof stored.labels === 'boolean') state = stored;
+    if (stored && Number.isInteger(stored.count) && stored.count >= 2 && stored.count <= 24 && hex(stored.base) && Array.isArray(stored.palette) && stored.palette.length === stored.count && stored.palette.every(hex) && typeof stored.labels === 'boolean') {
+      state = stored;
+      // Preserve fabric swatches when upgrading older saved arrangements.
+      if (state.count < 4) {
+        state.count = 4;
+        state.palette = state.palette.concat(Quilt.shades(state.base, 4).slice(state.palette.length));
+      }
+      if (!Quilt.valid(state.assignment, state.count)) state.assignment = Quilt.arrange(state.count);
+    }
   } catch { /* Storage may be unavailable or contain older data. */ }
   const geometry = Quilt.geometry();
   const ns = 'http://www.w3.org/2000/svg';
@@ -67,14 +75,13 @@
   }
   function render() {
     $('count').value = state.count; $('base').value = state.base; $('labels').checked = state.labels;
-    $('two-note').hidden = state.count !== 2;
     draw(); palette(); table(); save();
-    $('status').textContent = '24 pieces balanced. No matching neighbors.';
+    $('status').textContent = 'Balanced colors. Unique in every sector. No matching neighbors.';
   }
   function countInput() {
     const count = Number($('count').value);
-    if (!Number.isInteger(count) || count < 2 || count > 24) {
-      $('count').setCustomValidity('Choose a whole number from 2 to 24.'); $('count').reportValidity(); return null;
+    if (!Number.isInteger(count) || count < 4 || count > 24) {
+      $('count').setCustomValidity('Choose a whole number from 4 to 24.'); $('count').reportValidity(); return null;
     }
     $('count').setCustomValidity(''); return count;
   }

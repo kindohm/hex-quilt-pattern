@@ -19,12 +19,15 @@
     });
   }
   function valid(assignment, count) {
-    if (!Number.isInteger(count) || count < 2 || count > 24 || !Array.isArray(assignment) || assignment.length !== 24) return false;
+    if (!Number.isInteger(count) || count < 4 || count > 24 || !Array.isArray(assignment) || assignment.length !== 24) return false;
     const totals = Array(count).fill(0);
     for (let i = 0; i < 24; i++) {
       const color = assignment[i];
       if (!Number.isInteger(color) || color < 0 || color >= count || color === assignment[(i + 1) % 24]) return false;
       totals[color]++;
+    }
+    for (let start = 0; start < 24; start += 4) {
+      if (new Set(assignment.slice(start, start + 4)).size !== 4) return false;
     }
     return Math.max(...totals) - Math.min(...totals) <= 1;
   }
@@ -36,22 +39,25 @@
     return values;
   }
   function arrange(count, previous = [], random = Math.random) {
-    if (!Number.isInteger(count) || count < 2 || count > 24) throw new RangeError('Choose a whole number from 2 to 24.');
-    if (count === 2) {
-      const first = valid(previous, 2) ? 1 - previous[0] : Math.floor(random() * 2);
-      return Array.from({ length: 24 }, (_, i) => (first + i) % 2);
-    }
+    if (!Number.isInteger(count) || count < 4 || count > 24) throw new RangeError('Choose a whole number from 4 to 24.');
     const ids = shuffle(Array.from({ length: count }, (_, i) => i), random);
     const remaining = Array(count).fill(Math.floor(24 / count));
     for (let i = 0; i < 24 % count; i++) remaining[ids[i]]++;
     const result = [];
     function place() {
       if (result.length === 24) return result[23] !== result[0];
-      const candidates = shuffle(ids.filter(id => remaining[id] && id !== result.at(-1) && (result.length !== 23 || id !== result[0])), random);
+      const sectorColors = result.slice(Math.floor(result.length / 4) * 4);
+      const candidates = shuffle(ids.filter(id => remaining[id] && !sectorColors.includes(id) && id !== result.at(-1) && (result.length !== 23 || id !== result[0])), random);
       for (const id of candidates) {
         remaining[id]--; result.push(id);
-        const slots = 24 - result.length;
-        if (Math.max(...remaining) <= Math.ceil(slots / 2) && place()) return true;
+        // A color can occur only once in each remaining sector.
+        const sectorIndex = Math.floor(result.length / 4);
+        const usedHere = result.slice(sectorIndex * 4);
+        const capacityOK = remaining.every((quota, color) => {
+          const capacity = 6 - sectorIndex - (usedHere.includes(color) ? 1 : 0);
+          return quota <= capacity;
+        });
+        if (capacityOK && place()) return true;
         result.pop(); remaining[id]++;
       }
       return false;

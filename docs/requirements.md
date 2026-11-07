@@ -47,7 +47,7 @@ The line from the center to the top vertex at 12 o'clock is the boundary between
 - Build a standalone web page; p5.js is optional and not required.
 - Display the quilt as crisp SVG geometry using the A–F and 1–5 identifiers defined above.
 - All six inner triangles (piece 5) are always gray and excluded from color distribution.
-- Accept a whole-number color count from 2 through 24.
+- Accept a whole-number color count from 4 through 24.
 - Generate lighter and darker shades from a user-selected starting color. Each numbered color has an editable swatch, used as a rough preview of already chosen fabrics.
 - Generating shades replaces the palette but preserves piece assignments. Changing the color count creates a matching palette and arrangement.
 - Randomize changes the placement of color IDs while preserving the current palette.
@@ -56,7 +56,8 @@ The line from the center to the top vertex at 12 o'clock is the boundary between
 - Adjacent outer pieces must never share a color ID. Different IDs may have visually similar or identical swatches.
 - Outer-piece adjacency forms a ring: A1–A2–A3–A4–B1–…–F4–A1.
 - Use randomized placement with backtracking and validate the result before displaying it; full-layout rejection sampling is not required.
-- Two colors require strict alternation. Explain this limitation; Randomize swaps the two colors' positions.
+- A color ID cannot appear more than once within the same sector, even on nonadjacent pieces. Each sector therefore needs four distinct colors, making 4 the minimum available count.
+- When loading older saved arrangements, preserve the palette and preferences and regenerate assignments that violate the new rule. Upgrade counts below 4 to 4.
 - Show piece and color IDs on the drawing, for example `A1 · C3`, with a toggle to hide labels. The legend names color IDs explicitly as “Color 3.”
 - Show a text table with one row per sector, columns for pieces 1–5, and assigned color IDs (gray for piece 5), plus a numbered color legend.
 - Provide a Copy Table action that includes the assignments and legend for notes or spreadsheets.

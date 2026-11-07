@@ -12,7 +12,7 @@ The server runs through `npx`, so no project dependencies or build step are requ
 
 You can also open `index.html` directly in a browser.
 
-Choose 2–24 fabric colors, generate shades from a starting color, and edit individual swatches. Randomize balances all 24 outer pieces without equal color IDs sharing an edge. Two colors necessarily alternate. Copy the assignment table and palette for your cutting plan. The six inner triangles remain gray.
+Choose 4–24 fabric colors, generate shades from a starting color, and edit individual swatches. Randomize balances all 24 outer pieces without equal color IDs sharing an edge. Each sector uses four distinct color IDs. Copy the assignment table and palette for your cutting plan. The six inner triangles remain gray.
 
 The page saves its state in browser local storage when available. A different browser or origin has separate saved state. Clipboard access has a manual-copy fallback.
 
